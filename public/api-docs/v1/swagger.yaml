@@ -1,0 +1,51 @@
+swagger: '2.0'
+info:
+  title: 'API Documentation'
+  description: 'API endpoints.'
+  version: '1.0'
+paths:
+  /calculate_fuel:
+    post:
+      summary: 'Calculates fuel required for the flight'
+      description: 'Calculate fuel required for the flight based on mass and flight path'
+      tags:
+        - 'Fuel'
+      consumes:
+        - 'application/json'
+      parameters:
+        - in: 'body'
+          name: 'body'
+          description: 'Mass and flight path data'
+          required: true
+          schema:
+            type: 'object'
+            properties:
+              mass:
+                type: integer
+                example: 28801
+              flight_path:
+                type: array
+                items:
+                  type: array
+                  items:
+                    type: string
+                example:
+                  - ['launch', 'Earth']
+                  - ['land', 'Moon']
+                  - ['launch', 'Moon']
+                  - ['land', 'Earth']
+      responses:
+        '200':
+          description: 'Total fuel required'
+          schema:
+            type: 'object'
+            properties:
+              total_fuel:
+                type: 'integer'
+        '422':
+          description: 'Unprocessable Entity'
+          schema:
+            type: 'object'
+            properties:
+              error:
+                type: 'string'

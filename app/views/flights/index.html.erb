@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Flight Fuel Calculator</title>  
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<h2>Flight Fuel Calculator</h2>
+
+<p>Enter ship's mass:</p>
+<input type="number" id="ship-mass" placeholder="Enter mass (kg)">
+<br><br>
+
+<p>Enter flight path:</p>
+<textarea id="flight-path" placeholder="Enter flight path"></textarea>
+<br><br>
+
+<button id="calculate-btn">Calculate Fuel</button>
+
+<div id="fuel-result"></div>
+
+<script>
+$(document).ready(function(){
+  $('#calculate-btn').click(function(){
+    var mass = $('#ship-mass').val();
+    var path = $('#flight-path').val();
+
+    var flightPathArray = $.map(path.split('\n'), function(value){
+      return value.split(',');
+    });
+
+    $.ajax({
+      url: '/calculate_fuel',
+      type: 'POST',
+      contentType: 'application/json',
+      data: JSON.stringify({ mass: mass, flight_path: flightPathArray }),
+      success: function(response) {
+        $('#fuel-result').text('Total fuel required: ' + response.total_fuel + ' kg');
+      },
+      error: function(xhr, status, error) {
+        alert('An error occurred while calculating fuel: ' + error);
+      }
+    });
+  });
+});
+</script>
+
+</body>
+</html>
