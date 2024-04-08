@@ -27,7 +27,7 @@ class FlightsController < ApplicationController
   def calculate_additional_fuel(full_mass, action)
     #TODO: Unreadable code, will be refactored.
     gravitation = PLANETS_GRAVITATION[action[1]]
-    params = FLY_PARAMETERS[action[0].to_sym]
+    params = FLY_PARAMETERS[action[0]]
     calculated_fuel = (full_mass * gravitation * params[0] - params[1]).to_i
 
     return 0 if calculated_fuel <= 0

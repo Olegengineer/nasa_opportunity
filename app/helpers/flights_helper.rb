@@ -6,8 +6,8 @@ module FlightsHelper
   }.freeze
 
   FLY_PARAMETERS = { 
-    launch: [0.042, 33],
-    land: [0.033, 42]
+    "launch" => [0.042, 33],
+    "land" => [0.033, 42]
    }.freeze
 
   #TODO: remove after test stuff.
